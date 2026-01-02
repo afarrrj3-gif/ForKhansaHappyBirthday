@@ -1,110 +1,152 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Stock Editor</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editor Stok ML</title>
+
 <style>
-  body{margin:0;font-family:sans-serif;background:#0f172a;color:#e5e7eb}
-  header{padding:12px;text-align:center;font-weight:700}
-  #canvasWrap{display:flex;justify-content:center;padding:10px}
-  canvas{max-width:100%;border-radius:12px;background:#111}
-  .btn{position:fixed;left:0;right:0;bottom:0;padding:18px;
-    background:#22c55e;color:#022c22;font-size:20px;font-weight:800;border:none}
-  .modal{position:fixed;inset:0;background:#000a;display:none;align-items:center;justify-content:center}
-  .box{background:#0b1220;padding:16px;border-radius:14px;width:90%;max-width:420px}
-  .box input{width:100%;margin:6px 0;padding:10px;border-radius:8px;border:none}
-  .box button{width:100%;padding:12px;margin-top:10px;font-weight:700}
+body {
+  margin: 0;
+  background: #0b1220;
+  font-family: Arial, sans-serif;
+  color: white;
+  text-align: center;
+}
+
+canvas {
+  max-width: 100%;
+  border-radius: 12px;
+  margin-top: 15px;
+}
+
+button {
+  background: #00ff88;
+  color: #000;
+  border: none;
+  padding: 14px;
+  width: 90%;
+  border-radius: 12px;
+  font-size: 18px;
+  margin: 8px auto;
+  font-weight: bold;
+}
+
+input {
+  width: 90%;
+  padding: 12px;
+  margin: 6px auto;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+}
+
+.popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup .box {
+  background: #101a30;
+  padding: 20px;
+  border-radius: 14px;
+  width: 90%;
+}
 </style>
 </head>
+
 <body>
 
-<header>STOCK EDITOR</header>
+<h2>STOK ML AUTO EDIT</h2>
 
-<div id="canvasWrap">
-  <canvas id="cv" width="1080" height="1350"></canvas>
-</div>
+<canvas id="canvas" width="1080" height="1350"></canvas>
 
-<button class="btn" onclick="openEdit()">EDIT</button>
+<button onclick="openPopup()">EDIT</button>
+<button onclick="download()">SIMPAN KE GALERI</button>
 
-<!-- MODAL -->
-<div class="modal" id="modal">
+<div class="popup" id="popup">
   <div class="box">
-    <input type="file" id="img1" accept="image/*">
-    <input type="file" id="img2" accept="image/*">
+    <input type="file" accept="image/*" id="img1">
+    <input type="file" accept="image/*" id="img2">
+
     <input placeholder="Emblem" id="emblem">
     <input placeholder="Hero" id="hero">
     <input placeholder="Mcore" id="mcore">
-    <input placeholder="All Skin" id="allskin">
-    <input placeholder="Harga" id="harga">
+    <input placeholder="All Skin" id="skin">
+    <input placeholder="Harga (contoh 80.000)" id="harga">
     <input placeholder="High Rank" id="rank">
-    <button onclick="render()">EDIT SEKARANG</button>
+
+    <button onclick="render()">PROSES</button>
+    <button onclick="closePopup()">TUTUP</button>
   </div>
 </div>
 
 <script>
-const cv = document.getElementById('cv');
-const ctx = cv.getContext('2d');
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
 
-// auto load last edit (<=3 hari)
-const saved = JSON.parse(localStorage.getItem('lastEdit')||'null');
-if(saved && Date.now()-saved.time < 3*24*60*60*1000){
+const template = new Image();
+template.src = "https://res.cloudinary.com/dtdodhqqi/image/upload/v1767373501/Proyek_Baru_277_BEA6A7F_gtg65i.png"; // GANTI NAMA FILE TEMPLATE
+
+template.onload = () => {
+  ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
+};
+
+function openPopup() {
+  document.getElementById("popup").style.display = "flex";
+}
+
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
+}
+
+function drawText(text, x, y, size = 42) {
+  ctx.font = `bold ${size}px Arial`;
+  ctx.fillStyle = "white";
+  ctx.shadowColor = "black";
+  ctx.shadowBlur = 6;
+  ctx.fillText(text, x, y);
+}
+
+function render() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
+
+  const e = emblem.value;
+  const h = hero.value;
+  const m = mcore.value;
+  const s = skin.value;
+  const g = harga.value;
+  const r = rank.value;
+
+  drawText("IDR " + g, 420, 690, 64);
+  drawText("EMBLEM " + e, 120, 1150);
+  drawText("HERO " + h, 120, 1210);
+  drawText("MCORE " + m, 760, 1150);
+  drawText("ALL SKIN " + s, 760, 1210);
+  drawText(r, 470, 1080, 48);
+
+  loadImage(img1.files[0], 140, 230, 380, 210);
+  loadImage(img2.files[0], 560, 230, 380, 210);
+
+  closePopup();
+}
+
+function loadImage(file, x, y, w, h) {
+  if (!file) return;
   const img = new Image();
-  img.onload=()=>ctx.drawImage(img,0,0,cv.width,cv.height);
-  img.src = saved.data;
-}else{
-  localStorage.removeItem('lastEdit');
+  img.onload = () => ctx.drawImage(img, x, y, w, h);
+  img.src = URL.createObjectURL(file);
 }
 
-function openEdit(){
-  document.getElementById('modal').style.display='flex';
-}
-
-function render(){
-  ctx.clearRect(0,0,cv.width,cv.height);
-  ctx.fillStyle="#0b1220"; ctx.fillRect(0,0,cv.width,cv.height);
-
-  const f1 = img1.files[0], f2 = img2.files[0];
-  const t = {
-    emblem:emblem.value, hero:hero.value, mcore:mcore.value,
-    allskin:allskin.value, harga:harga.value, rank:rank.value
-  };
-
-  let loaded=0;
-  [f1,f2].forEach((f,i)=>{
-    if(!f){loaded++; return;}
-    const im=new Image();
-    im.onload=()=>{
-      ctx.drawImage(im, i?600:60, 160, 420, 420);
-      if(++loaded===2) drawText(t);
-    };
-    im.src=URL.createObjectURL(f);
-  });
-}
-
-function drawText(t){
-  ctx.fillStyle="#e5e7eb";
-  ctx.font="bold 42px sans-serif";
-  ctx.fillText("IDR "+t.harga, 360, 650);
-
-  ctx.font="28px sans-serif";
-  ctx.fillText("Emblem: "+t.emblem, 80, 760);
-  ctx.fillText("Hero: "+t.hero, 80, 810);
-  ctx.fillText("Mcore: "+t.mcore, 80, 860);
-  ctx.fillText("All Skin: "+t.allskin, 80, 910);
-  ctx.fillText("High Rank: "+t.rank, 80, 960);
-
-  const data = cv.toDataURL("image/png");
-  localStorage.setItem('lastEdit', JSON.stringify({time:Date.now(),data}));
-
-  setTimeout(()=>download(),300);
-  modal.style.display="none";
-}
-
-function download(){
-  const a=document.createElement('a');
-  a.href=cv.toDataURL("image/png");
-  a.download="stok_edit.png";
+function download() {
+  const a = document.createElement("a");
+  a.download = "stok-ml.png";
+  a.href = canvas.toDataURL("image/png");
   a.click();
 }
 </script>
