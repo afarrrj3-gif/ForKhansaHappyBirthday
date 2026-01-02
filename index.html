@@ -2,151 +2,100 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Editor Stok ML</title>
-
+<title>STOK ML AUTO EDIT</title>
 <style>
-body {
-  margin: 0;
-  background: #0b1220;
+body{
+  margin:0;
+  background:#0b1220;
+  color:#fff;
   font-family: Arial, sans-serif;
-  color: white;
-  text-align: center;
+  text-align:center;
 }
-
-canvas {
-  max-width: 100%;
-  border-radius: 12px;
-  margin-top: 15px;
+canvas{max-width:100%; border-radius:12px;}
+input,button{
+  width:90%;
+  padding:12px;
+  margin:6px 0;
+  font-size:16px;
 }
-
-button {
-  background: #00ff88;
-  color: #000;
-  border: none;
-  padding: 14px;
-  width: 90%;
-  border-radius: 12px;
-  font-size: 18px;
-  margin: 8px auto;
-  font-weight: bold;
-}
-
-input {
-  width: 90%;
-  padding: 12px;
-  margin: 6px auto;
-  border-radius: 10px;
-  border: none;
-  font-size: 16px;
-}
-
-.popup {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.8);
-  display: none;
-  justify-content: center;
-  align-items: center;
-}
-
-.popup .box {
-  background: #101a30;
-  padding: 20px;
-  border-radius: 14px;
-  width: 90%;
+button{
+  background:#00ff9c;
+  border:none;
+  font-weight:bold;
 }
 </style>
 </head>
-
 <body>
 
 <h2>STOK ML AUTO EDIT</h2>
 
-<canvas id="canvas" width="1080" height="1350"></canvas>
+<input type="file" id="img1" accept="image/*">
+<input type="file" id="img2" accept="image/*">
 
-<button onclick="openPopup()">EDIT</button>
-<button onclick="download()">SIMPAN KE GALERI</button>
+<input id="harga" placeholder="Harga (contoh: 125.000)">
+<input id="emblem" placeholder="Emblem (MAX)">
+<input id="hero" placeholder="Hero (FULL)">
+<input id="mcore" placeholder="Mcore (57)">
+<input id="allskin" placeholder="All Skin (209)">
+<input id="rank" placeholder="Rank (GLRY 52)">
 
-<div class="popup" id="popup">
-  <div class="box">
-    <input type="file" accept="image/*" id="img1">
-    <input type="file" accept="image/*" id="img2">
+<button onclick="render()">EDIT</button>
+<button onclick="save()">SIMPAN KE GALERI</button>
 
-    <input placeholder="Emblem" id="emblem">
-    <input placeholder="Hero" id="hero">
-    <input placeholder="Mcore" id="mcore">
-    <input placeholder="All Skin" id="skin">
-    <input placeholder="Harga (contoh 80.000)" id="harga">
-    <input placeholder="High Rank" id="rank">
-
-    <button onclick="render()">PROSES</button>
-    <button onclick="closePopup()">TUTUP</button>
-  </div>
-</div>
+<canvas id="cv" width="1080" height="1350"></canvas>
 
 <script>
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-
+const cv = document.getElementById("cv");
+const ctx = cv.getContext("2d");
 const template = new Image();
-template.src = "https://res.cloudinary.com/dtdodhqqi/image/upload/v1767373501/Proyek_Baru_277_BEA6A7F_gtg65i.png"; // GANTI NAMA FILE TEMPLATE
+template.src = "https://res.cloudinary.com/dtdodhqqi/image/upload/v1767374406/Proyek_Baru_277_4043A46_o4aeuu.png";
 
-template.onload = () => {
-  ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
-};
-
-function openPopup() {
-  document.getElementById("popup").style.display = "flex";
+function clipImage(img, x, y, w, h){
+  ctx.save();
+  ctx.beginPath();
+  ctx.roundRect(x,y,w,h,20);
+  ctx.clip();
+  ctx.drawImage(img,x,y,w,h);
+  ctx.restore();
 }
 
-function closePopup() {
-  document.getElementById("popup").style.display = "none";
+function render(){
+  ctx.clearRect(0,0,1080,1350);
+  ctx.drawImage(template,0,0,1080,1350);
+
+  const i1 = document.getElementById("img1").files[0];
+  const i2 = document.getElementById("img2").files[0];
+
+  if(i1){
+    const img = new Image();
+    img.onload=()=>clipImage(img,120,230,400,220);
+    img.src=URL.createObjectURL(i1);
+  }
+  if(i2){
+    const img = new Image();
+    img.onload=()=>clipImage(img,560,230,400,220);
+    img.src=URL.createObjectURL(i2);
+  }
+
+  ctx.textAlign="center";
+  ctx.fillStyle="#fff";
+  ctx.font="bold 60px Arial";
+  ctx.fillText("IDR "+harga.value,540,530);
+
+  ctx.font="bold 34px Arial";
+  ctx.fillText(emblem.value,260,980);
+  ctx.fillText(hero.value,260,1040);
+  ctx.fillText(mcore.value,820,980);
+  ctx.fillText(allskin.value,820,1040);
+
+  ctx.font="bold 40px Arial";
+  ctx.fillText(rank.value,540,1090);
 }
 
-function drawText(text, x, y, size = 42) {
-  ctx.font = `bold ${size}px Arial`;
-  ctx.fillStyle = "white";
-  ctx.shadowColor = "black";
-  ctx.shadowBlur = 6;
-  ctx.fillText(text, x, y);
-}
-
-function render() {
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
-
-  const e = emblem.value;
-  const h = hero.value;
-  const m = mcore.value;
-  const s = skin.value;
-  const g = harga.value;
-  const r = rank.value;
-
-  drawText("IDR " + g, 420, 690, 64);
-  drawText("EMBLEM " + e, 120, 1150);
-  drawText("HERO " + h, 120, 1210);
-  drawText("MCORE " + m, 760, 1150);
-  drawText("ALL SKIN " + s, 760, 1210);
-  drawText(r, 470, 1080, 48);
-
-  loadImage(img1.files[0], 140, 230, 380, 210);
-  loadImage(img2.files[0], 560, 230, 380, 210);
-
-  closePopup();
-}
-
-function loadImage(file, x, y, w, h) {
-  if (!file) return;
-  const img = new Image();
-  img.onload = () => ctx.drawImage(img, x, y, w, h);
-  img.src = URL.createObjectURL(file);
-}
-
-function download() {
-  const a = document.createElement("a");
-  a.download = "stok-ml.png";
-  a.href = canvas.toDataURL("image/png");
+function save(){
+  const a=document.createElement("a");
+  a.download="hasil-edit.png";
+  a.href=cv.toDataURL("image/png");
   a.click();
 }
 </script>
