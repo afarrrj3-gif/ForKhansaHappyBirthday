@@ -1,145 +1,111 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kritik & Saran</title>
-
-<!-- Font -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Stock Editor</title>
 <style>
-:root {
-  --blue: #1e88e5;
-  --light-blue: #e3f2fd;
-  --dark: #0d47a1;
-}
-
-* {
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
-
-body {
-  background: linear-gradient(135deg, var(--light-blue), #ffffff);
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.container {
-  background: white;
-  width: 100%;
-  max-width: 420px;
-  padding: 30px;
-  border-radius: 18px;
-  box-shadow: 0 20px 40px rgba(30,136,229,.2);
-  animation: fadeUp 1s ease;
-}
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-h1 {
-  text-align: center;
-  color: var(--dark);
-  margin-bottom: 8px;
-}
-
-p {
-  text-align: center;
-  color: #555;
-  font-size: 14px;
-  margin-bottom: 25px;
-}
-
-input, textarea {
-  width: 100%;
-  padding: 14px;
-  border-radius: 12px;
-  border: 1px solid #ddd;
-  margin-bottom: 15px;
-  font-size: 14px;
-  transition: .3s;
-}
-
-input:focus, textarea:focus {
-  border-color: var(--blue);
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(30,136,229,.15);
-}
-
-textarea {
-  resize: none;
-  height: 120px;
-}
-
-button {
-  width: 100%;
-  background: var(--blue);
-  color: white;
-  border: none;
-  padding: 14px;
-  border-radius: 14px;
-  font-size: 15px;
-  cursor: pointer;
-  transition: .3s;
-}
-
-button:hover {
-  background: var(--dark);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(13,71,161,.3);
-}
-
-.footer {
-  text-align: center;
-  font-size: 12px;
-  color: #aaa;
-  margin-top: 15px;
-}
+  body{margin:0;font-family:sans-serif;background:#0f172a;color:#e5e7eb}
+  header{padding:12px;text-align:center;font-weight:700}
+  #canvasWrap{display:flex;justify-content:center;padding:10px}
+  canvas{max-width:100%;border-radius:12px;background:#111}
+  .btn{position:fixed;left:0;right:0;bottom:0;padding:18px;
+    background:#22c55e;color:#022c22;font-size:20px;font-weight:800;border:none}
+  .modal{position:fixed;inset:0;background:#000a;display:none;align-items:center;justify-content:center}
+  .box{background:#0b1220;padding:16px;border-radius:14px;width:90%;max-width:420px}
+  .box input{width:100%;margin:6px 0;padding:10px;border-radius:8px;border:none}
+  .box button{width:100%;padding:12px;margin-top:10px;font-weight:700}
 </style>
 </head>
-
 <body>
 
-<div class="container">
-  <h1>Kritik & Saran</h1>
-  <p>Masukan Anda sangat berarti bagi kami 💙</p>
+<header>STOCK EDITOR</header>
 
-  <input type="text" id="nama" placeholder="Nama Anda">
-  <textarea id="pesan" placeholder="Tulis kritik & saran Anda di sini..."></textarea>
+<div id="canvasWrap">
+  <canvas id="cv" width="1080" height="1350"></canvas>
+</div>
 
-  <button onclick="kirimWA()">Kirim ke WhatsApp</button>
+<button class="btn" onclick="openEdit()">EDIT</button>
 
-  <div class="footer">
-    Terima kasih atas masukannya 🙏
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="box">
+    <input type="file" id="img1" accept="image/*">
+    <input type="file" id="img2" accept="image/*">
+    <input placeholder="Emblem" id="emblem">
+    <input placeholder="Hero" id="hero">
+    <input placeholder="Mcore" id="mcore">
+    <input placeholder="All Skin" id="allskin">
+    <input placeholder="Harga" id="harga">
+    <input placeholder="High Rank" id="rank">
+    <button onclick="render()">EDIT SEKARANG</button>
   </div>
 </div>
 
 <script>
-function kirimWA() {
-  const nama = document.getElementById("nama").value.trim();
-  const pesan = document.getElementById("pesan").value.trim();
+const cv = document.getElementById('cv');
+const ctx = cv.getContext('2d');
 
-  if (!nama || !pesan) {
-    alert("Nama dan pesan tidak boleh kosong!");
-    return;
-  }
+// auto load last edit (<=3 hari)
+const saved = JSON.parse(localStorage.getItem('lastEdit')||'null');
+if(saved && Date.now()-saved.time < 3*24*60*60*1000){
+  const img = new Image();
+  img.onload=()=>ctx.drawImage(img,0,0,cv.width,cv.height);
+  img.src = saved.data;
+}else{
+  localStorage.removeItem('lastEdit');
+}
 
-  const nomorWA = "6289679520905"; // GANTI dengan nomor WhatsApp kamu
-  const text = `Halo,%0ASaya ${nama}.%0A%0AKritik & Saran:%0A${pesan}`;
+function openEdit(){
+  document.getElementById('modal').style.display='flex';
+}
 
-  window.open(`https://wa.me/${nomorWA}?text=${text}`, "_blank");
+function render(){
+  ctx.clearRect(0,0,cv.width,cv.height);
+  ctx.fillStyle="#0b1220"; ctx.fillRect(0,0,cv.width,cv.height);
+
+  const f1 = img1.files[0], f2 = img2.files[0];
+  const t = {
+    emblem:emblem.value, hero:hero.value, mcore:mcore.value,
+    allskin:allskin.value, harga:harga.value, rank:rank.value
+  };
+
+  let loaded=0;
+  [f1,f2].forEach((f,i)=>{
+    if(!f){loaded++; return;}
+    const im=new Image();
+    im.onload=()=>{
+      ctx.drawImage(im, i?600:60, 160, 420, 420);
+      if(++loaded===2) drawText(t);
+    };
+    im.src=URL.createObjectURL(f);
+  });
+}
+
+function drawText(t){
+  ctx.fillStyle="#e5e7eb";
+  ctx.font="bold 42px sans-serif";
+  ctx.fillText("IDR "+t.harga, 360, 650);
+
+  ctx.font="28px sans-serif";
+  ctx.fillText("Emblem: "+t.emblem, 80, 760);
+  ctx.fillText("Hero: "+t.hero, 80, 810);
+  ctx.fillText("Mcore: "+t.mcore, 80, 860);
+  ctx.fillText("All Skin: "+t.allskin, 80, 910);
+  ctx.fillText("High Rank: "+t.rank, 80, 960);
+
+  const data = cv.toDataURL("image/png");
+  localStorage.setItem('lastEdit', JSON.stringify({time:Date.now(),data}));
+
+  setTimeout(()=>download(),300);
+  modal.style.display="none";
+}
+
+function download(){
+  const a=document.createElement('a');
+  a.href=cv.toDataURL("image/png");
+  a.download="stok_edit.png";
+  a.click();
 }
 </script>
 
