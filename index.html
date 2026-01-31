@@ -1,166 +1,184 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Untuk Kamu</title>
+<title>Hello My Love</title>
 
 <style>
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(180deg, #0f172a, #020617);
-  color: #e5e7eb;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: 'Comic Sans MS','Segoe UI',sans-serif;
 }
 
-.container {
-  max-width: 420px;
-  margin: 80px auto;
-  padding: 24px;
-  text-align: center;
+body{
+  height:100vh;
+  background:url("https://res.cloudinary.com/dtdodhqqi/image/upload/v1769863421/fbd283a1716bd691a35e42afe2cc779c_1_zescvo.jpg");
+  background-size:cover;
+  background-position:center;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
-h1 {
-  font-size: 24px;
-  margin-bottom: 10px;
+.paper{
+  animation: paperFloat 6s ease-in-out infinite;
 }
 
-p {
-  font-size: 15px;
-  line-height: 1.6;
-  opacity: 0.9;
+.page{
+  text-align:center;
+  animation: fadeIn .8s ease;
 }
 
-button {
-  width: 100%;
-  margin-top: 16px;
-  padding: 14px;
-  border-radius: 12px;
-  border: none;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
+.hidden{
+  display:none;
 }
 
-.btn-main {
-  background: linear-gradient(90deg, #ec4899, #f472b6);
-  color: #3b0a1e;
+/* TEXT */
+h1{
+  font-size:38px;
+  margin-top:15px;
 }
 
-.btn-disabled {
-  background: #1e293b;
-  color: #94a3b8;
-  cursor: not-allowed;
+.black{color:#111;}
+.blue{color:#3b82f6;}
+.pink{color:#ec4899;}
+
+/* BUTTONS */
+.buttons{
+  margin-top:30px;
 }
 
-.footer {
-  margin-top: 30px;
-  font-size: 12px;
-  opacity: 0.5;
+button{
+  padding:12px 22px;
+  margin:8px;
+  border-radius:25px;
+  border:2px solid #ec4899;
+  background:transparent;
+  font-weight:bold;
+  font-size:15px;
 }
 
-/* POPUP */
-.popup {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.yes{
+  background:#ec4899;
+  color:white;
 }
 
-.popup-box {
-  background: #020617;
-  padding: 24px;
-  border-radius: 14px;
-  max-width: 360px;
-  text-align: center;
+.retry{
+  background:#3b82f6;
+  color:white;
+  border-color:#3b82f6;
 }
 
-.hidden {
-  display: none;
+/* CAT */
+.cat{
+  width:120px;
+  margin:auto;
+  animation: catFloat 3s ease-in-out infinite;
 }
 
-video {
-  width: 100%;
-  border-radius: 12px;
-  margin-top: 16px;
+.eye{
+  animation: blink 4s infinite;
+  transform-origin:center;
+}
+
+.sad{
+  animation: sadShake 2s infinite;
+}
+
+/* ANIMATION */
+@keyframes catFloat{
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-12px);}
+  100%{transform:translateY(0);}
+}
+
+@keyframes blink{
+  0%,95%,100%{transform:scaleY(1);}
+  96%{transform:scaleY(0.1);}
+}
+
+@keyframes sadShake{
+  0%,100%{transform:rotate(0);}
+  50%{transform:rotate(3deg);}
+}
+
+@keyframes paperFloat{
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-8px);}
+  100%{transform:translateY(0);}
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:scale(.95);}
+  to{opacity:1;}
 }
 </style>
 </head>
 
 <body>
 
-<!-- POPUP AWAL -->
-<div class="popup" id="popupIntro">
-  <div class="popup-box">
-    <h1>Kamu Itu Spesial 🤍</h1>
-    <p>
-      Aku ga pernah nyangka kita bisa sedeket ini.  
-      Semua terjadi sederhana, tapi rasanya berarti.
-      Website ini aku bikin khusus buat kamu.
-    </p>
-    <button class="btn-main" onclick="closeIntro()">Lanjut</button>
-  </div>
-</div>
+<div class="paper">
 
-<div class="container">
-  <h1>Selamat Ulang Tahun 🎂</h1>
-  <p>
-    Hari ini bukan cuma tentang bertambahnya usia,  
-    tapi tentang kamu yang tetap jadi diri kamu —  
-    dan itu cukup buat aku bangga.
-  </p>
+  <!-- PAGE 1 -->
+  <div class="page" id="page1">
 
-  <button class="btn-main" onclick="showEffort()">
-    Effort aku buat kamu
-  </button>
+    <!-- CAT SVG -->
+    <svg class="cat" viewBox="0 0 200 200">
+      <circle cx="100" cy="110" r="55" fill="#fff"/>
+      <polygon points="60,60 80,20 100,60" fill="#fff"/>
+      <polygon points="140,60 120,20 100,60" fill="#fff"/>
 
-  <button class="btn-disabled">
-    🎥 Video belum bisa dibuka
-  </button>
+      <ellipse class="eye" cx="80" cy="105" rx="6" ry="10" fill="#111"/>
+      <ellipse class="eye" cx="120" cy="105" rx="6" ry="10" fill="#111"/>
 
-  <!-- VIDEO (TERKUNCI) -->
-  <div id="videoBox" class="hidden">
-    <video controls>
-      <source src="video.mp4" type="video/mp4">
-    </video>
+      <circle cx="100" cy="120" r="4" fill="#ec4899"/>
+      <path d="M90 130 Q100 135 110 130" stroke="#111" fill="none"/>
+    </svg>
+
+    <h1>
+      <span class="black">Hello</span>
+      <span class="blue"> my</span>
+      <span class="pink"> love!</span>
+    </h1>
+
+    <div class="buttons">
+      <button class="yes">YES PLEASE</button>
+      <button onclick="goNo()">NO THANKS</button>
+    </div>
   </div>
 
-  <div class="footer">
-    PoweredByAryanzUtama
-  </div>
-</div>
+  <!-- PAGE 2 -->
+  <div class="page hidden" id="page2">
 
-<!-- POPUP EFFORT -->
-<div class="popup hidden" id="popupEffort">
-  <div class="popup-box">
-    <p>
-      Video ini aku simpan sampai waktunya tepat.  
-      Aku pengen kamu nontonnya setelah aku kasih  
-      hadiah ini langsung ke kamu 🤍
-    </p>
-    <button class="btn-main" onclick="closeEffort()">Aku ngerti</button>
+    <svg class="cat sad" viewBox="0 0 200 200">
+      <circle cx="100" cy="110" r="55" fill="#fff"/>
+      <polygon points="60,60 80,20 100,60" fill="#fff"/>
+      <polygon points="140,60 120,20 100,60" fill="#fff"/>
+
+      <ellipse cx="80" cy="110" rx="6" ry="10" fill="#111"/>
+      <ellipse cx="120" cy="110" rx="6" ry="10" fill="#111"/>
+
+      <path d="M85 135 Q100 125 115 135" stroke="#111" fill="none"/>
+    </svg>
+
+    <h1 class="pink">I promise you’ll like it</h1>
+    <button class="retry" onclick="goYes()">TRY AGAIN</button>
   </div>
+
 </div>
 
 <script>
-function closeIntro() {
-  document.getElementById('popupIntro').classList.add('hidden');
+function goNo(){
+  document.getElementById("page1").classList.add("hidden");
+  document.getElementById("page2").classList.remove("hidden");
 }
 
-function showEffort() {
-  document.getElementById('popupEffort').classList.remove('hidden');
-}
-
-function closeEffort() {
-  document.getElementById('popupEffort').classList.add('hidden');
-}
-
-// MODE BUKA VIDEO (KHUSUS LU)
-if (window.location.search.includes("open=true")) {
-  document.querySelector('.btn-disabled').style.display = 'none';
-  document.getElementById('videoBox').classList.remove('hidden');
+function goYes(){
+  document.getElementById("page2").classList.add("hidden");
+  document.getElementById("page1").classList.remove("hidden");
 }
 </script>
 
