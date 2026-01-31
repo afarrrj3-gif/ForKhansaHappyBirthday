@@ -16,7 +16,7 @@
 }
 
 body{
-  height:100vh;
+  min-height:100vh;
   background:url("https://res.cloudinary.com/dtdodhqqi/image/upload/v1769863421/fbd283a1716bd691a35e42afe2cc779c_1_zescvo.jpg");
   background-size:cover;
   background-position:center;
@@ -60,9 +60,9 @@ h1{
   margin-bottom:10px;
 }
 
-.black{color:#111}
-.blue{color:#3b82f6}
-.pink{color:#ec4899}
+.black{color:#111;}
+.blue{color:#3b82f6;}
+.pink{color:#ec4899;}
 
 .subtitle{
   font-family:'Poppins', sans-serif;
@@ -95,99 +95,51 @@ button{
 }
 
 .secondary{
+  background:white;
   color:#ec4899;
 }
 
-/* OVERLAY */
-.overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.45);
-  backdrop-filter:blur(5px);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:20;
-  animation: fadeIn .6s ease;
+/* PHOTO PAGE */
+.photo-page{
+  width:100%;
+  max-width:420px;
+  padding:20px;
+  animation: fadeIn .8s ease;
 }
 
-/* GIFT BOX */
-.gift-box{
-  background:rgba(255,255,255,.95);
-  border-radius:22px;
-  padding:28px 24px 30px;
-  width:330px;
-  animation: popIn .7s ease;
-}
-
-.gift-title{
-  font-family:'Patrick Hand', cursive;
-  font-size:26px;
-  text-align:center;
-  margin-bottom:20px;
-  color:#111;
-}
-
-.gifts{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:16px;
-}
-
-.gift{
-  background:#fff;
+.photo-page img{
+  width:100%;
   border-radius:18px;
-  padding:20px 10px;
-  text-align:center;
-  box-shadow:0 6px 15px rgba(0,0,0,.08);
-  animation: floatGift 3s ease-in-out infinite;
-}
-
-.gift span{
-  font-size:34px;
-  display:block;
-  margin-bottom:8px;
-}
-
-.gift p{
-  font-family:'Poppins', sans-serif;
-  font-size:13px;
-  font-weight:600;
-  color:#333;
+  margin-bottom:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,.15);
 }
 
 /* ANIMATIONS */
 @keyframes blink{
-  0%,95%,100%{transform:scaleY(1)}
-  96%{transform:scaleY(0.1)}
+  0%,95%,100%{transform:scaleY(1);}
+  96%{transform:scaleY(0.1);}
 }
 
 @keyframes breathe{
-  0%{transform:translateY(0)}
-  50%{transform:translateY(-6px)}
-  100%{transform:translateY(0)}
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-6px);}
+  100%{transform:translateY(0);}
 }
 
 @keyframes popIn{
-  from{opacity:0;transform:scale(.85)}
-  to{opacity:1;transform:scale(1)}
+  from{opacity:0;transform:scale(.9);}
+  to{opacity:1;transform:scale(1);}
 }
 
 @keyframes paperFloat{
-  0%{transform:translateY(0)}
-  50%{transform:translateY(-8px)}
-  100%{transform:translateY(0)}
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-8px);}
+  100%{transform:translateY(0);}
 }
 
 @keyframes fadeIn{
-  from{opacity:0}
-  to{opacity:1}
-}
-
-@keyframes floatGift{
-  0%{transform:translateY(0)}
-  50%{transform:translateY(-6px)}
-  100%{transform:translateY(0)}
+  from{opacity:0;}
+  to{opacity:1;}
 }
 </style>
 </head>
@@ -196,7 +148,7 @@ button{
 
 <div class="paper">
 
-  <!-- MAIN CARD -->
+  <!-- PAGE 1 -->
   <div class="card" id="page1">
 
     <svg class="cat" viewBox="0 0 200 200">
@@ -218,37 +170,40 @@ button{
     <div class="subtitle">do you want to see your gift?</div>
 
     <div class="buttons">
-      <button class="primary" onclick="openGifts()">YES PLEASE</button>
-      <button class="secondary">NO THANKS</button>
+      <button class="primary" onclick="openPhotos()">YES PLEASE</button>
+      <button class="secondary" onclick="goNo()">NO THANKS</button>
     </div>
   </div>
 
-</div>
-
-<!-- OVERLAY GIFTS (DISEMBUNYIKAN VIA JS) -->
-<div class="overlay hidden" id="giftOverlay">
-  <div class="gift-box">
-    <div class="gift-title">These are for you 💖</div>
-    <div class="gifts">
-      <div class="gift"><span>📸</span><p>Memories</p></div>
-      <div class="gift"><span>💌</span><p>Letters</p></div>
-      <div class="gift"><span>🎂</span><p>Surprise</p></div>
-      <div class="gift"><span>💖</span><p>My Love</p></div>
-    </div>
+  <!-- PAGE 2 -->
+  <div class="card hidden" id="page2">
+    <h1 class="pink">I promise you'll like it</h1>
+    <button class="primary" onclick="goYes()">TRY AGAIN</button>
   </div>
+
+  <!-- PHOTO PAGE -->
+  <div class="photo-page hidden" id="photoPage">
+    <img src="https://res.cloudinary.com/dtdodhqqi/image/upload/v1769898628/Proyek_Baru_3_CC861A7_to92n8.png">
+    <img src="https://res.cloudinary.com/dtdodhqqi/image/upload/v1769898645/Proyek_Baru_4_E38B3AF_ivhf9r.png">
+  </div>
+
 </div>
 
 <script>
-const overlay = document.getElementById("giftOverlay");
+function goNo(){
+  page1.classList.add("hidden");
+  page2.classList.remove("hidden");
+}
 
-// PASTI SEMBUNYI SAAT LOAD
-document.addEventListener("DOMContentLoaded", () => {
-  overlay.classList.add("hidden");
-});
+function goYes(){
+  page2.classList.add("hidden");
+  page1.classList.remove("hidden");
+}
 
-// MUNCUL HANYA SAAT YES PLEASE
-function openGifts(){
-  overlay.classList.remove("hidden");
+function openPhotos(){
+  page1.classList.add("hidden");
+  document.getElementById("photoPage").classList.remove("hidden");
+  document.body.style.overflow = "auto"; // BISA SCROLL
 }
 </script>
 
