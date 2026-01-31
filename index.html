@@ -1,183 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Hello My Love</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- FONT -->
 <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  font-family:'Patrick Hand', cursive;
+* {
+  box-sizing: border-box;
+  font-family: 'Patrick Hand', cursive;
 }
 
-body{
-  min-height:100vh;
-  background:url('https://res.cloudinary.com/dtdodhqqi/image/upload/v1769863421/fbd283a1716bd691a35e42afe2cc779c_1_zescvo.jpg');
-  background-size:cover;
-  background-position:center;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  overflow:hidden;
+body {
+  margin: 0;
+  height: 100vh;
+  background: url('https://res.cloudinary.com/dtdodhqqi/image/upload/v1769863421/fbd283a1716bd691a35e42afe2cc779c_1_zescvo.jpg') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* ===== MAIN ===== */
-.container{
-  text-align:center;
-  animation:fadeIn 1.2s ease;
+/* CONTAINER */
+.container {
+  text-align: center;
 }
 
-/* ===== CAT ===== */
-.cat{
-  width:120px;
-  height:120px;
-  margin:0 auto 20px;
-  position:relative;
-  animation:bounce 2s infinite;
+/* CHARACTER */
+.character {
+  width: 120px;
+  height: 120px;
+  background: white;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  position: relative;
+  animation: float 3s ease-in-out infinite;
 }
 
-.cat .head{
-  width:100%;
-  height:100%;
-  background:#fff;
-  border-radius:50%;
-  position:relative;
+.eye {
+  width: 10px;
+  height: 10px;
+  background: black;
+  border-radius: 50%;
+  position: absolute;
+  top: 45px;
 }
 
-.eye{
-  width:12px;
-  height:12px;
-  background:#000;
-  border-radius:50%;
-  position:absolute;
-  top:45px;
-}
-.eye.left{ left:35px; }
-.eye.right{ right:35px; }
+.eye.left { left: 40px; }
+.eye.right { right: 40px; }
 
-.blush{
-  width:14px;
-  height:8px;
-  background:pink;
-  border-radius:50%;
-  position:absolute;
-  top:65px;
-}
-.blush.left{ left:22px; }
-.blush.right{ right:22px; }
-
-@keyframes bounce{
-  0%,100%{ transform:translateY(0); }
-  50%{ transform:translateY(-10px); }
+.blush {
+  width: 14px;
+  height: 8px;
+  background: pink;
+  border-radius: 50%;
+  position: absolute;
+  top: 65px;
 }
 
-/* ===== TITLE ===== */
-h1{
-  font-size:48px;
-  margin-bottom:20px;
-}
-h1 span.hello{ color:#000; }
-h1 span.my{ color:#4aa3ff; }
-h1 span.love{ color:#ff6fae; }
+.blush.left { left: 30px; }
+.blush.right { right: 30px; }
 
-/* ===== BUTTON ===== */
-.btn-group{
-  display:flex;
-  gap:15px;
-  justify-content:center;
+/* TITLE */
+h1 {
+  font-size: 42px;
+  margin-bottom: 30px;
 }
 
-button{
-  padding:10px 22px;
-  border-radius:25px;
-  border:2px solid #ff6fae;
-  background:#fff;
-  font-size:18px;
-  cursor:pointer;
-  transition:.3s;
+.black { color: black; }
+.blue { color: #4da3ff; }
+.pink { color: #ff7aa8; }
+
+/* BUTTONS */
+.buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
 }
 
-button:hover{
-  transform:scale(1.05);
+.btn {
+  padding: 10px 24px;
+  border-radius: 30px;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-/* ===== POPUP ===== */
-.popup{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.4);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  opacity:0;
-  pointer-events:none;
-  transition:.4s ease;
+.btn.yes {
+  border: 2px solid #ff7aa8;
 }
 
-.popup.active{
-  opacity:1;
-  pointer-events:auto;
+.btn.no {
+  border: 2px solid #ff7aa8;
 }
 
-.popup-box{
-  background:#fff;
-  border-radius:25px;
-  padding:30px;
-  width:320px;
-  text-align:center;
-  animation:scaleIn .4s ease;
+.btn:hover {
+  transform: scale(1.05);
 }
 
-@keyframes scaleIn{
-  from{ transform:scale(.8); opacity:0; }
-  to{ transform:scale(1); opacity:1; }
+/* POPUP */
+.popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.2);
+  display: none;
+  align-items: center;
+  justify-content: center;
 }
 
-.popup-box h2{
-  color:#c0392b;
-  font-size:28px;
-  margin-bottom:10px;
+.popup.active {
+  display: flex;
 }
 
-.popup-box p{
-  font-size:16px;
-  margin-bottom:20px;
+.card {
+  background: white;
+  border-radius: 30px;
+  padding: 30px;
+  width: 90%;
+  max-width: 360px;
+  text-align: center;
+  animation: fadeUp 0.6s ease;
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:15px;
-  margin-bottom:20px;
+.card h2 {
+  color: #c0392b;
+  font-size: 26px;
+  margin-bottom: 5px;
 }
 
-.card{
-  border:2px solid #c0392b;
-  border-radius:15px;
-  padding:25px;
-  font-size:26px;
+.card p {
+  margin-bottom: 20px;
 }
 
-.next-btn{
-  border-color:#4aa3ff;
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 20px;
 }
 
-.footer{
-  font-size:12px;
-  margin-top:10px;
-  opacity:.6;
+.item {
+  border: 2px solid #c0392b;
+  border-radius: 20px;
+  padding: 20px;
+  font-size: 28px;
 }
 
-/* ===== ANIMATION ===== */
-@keyframes fadeIn{
-  from{ opacity:0; transform:translateY(20px); }
-  to{ opacity:1; transform:translateY(0); }
+.next {
+  border: 2px solid #4da3ff;
+  border-radius: 25px;
+  padding: 8px 30px;
+  background: transparent;
+  font-size: 18px;
+}
+
+.footer {
+  margin-top: 15px;
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+/* ANIMATION */
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 </style>
 </head>
@@ -185,70 +180,47 @@ button:hover{
 <body>
 
 <div class="container">
-  <div class="cat">
-    <div class="head">
-      <div class="eye left"></div>
-      <div class="eye right"></div>
-      <div class="blush left"></div>
-      <div class="blush right"></div>
-    </div>
+  <div class="character">
+    <div class="eye left"></div>
+    <div class="eye right"></div>
+    <div class="blush left"></div>
+    <div class="blush right"></div>
   </div>
 
   <h1>
-    <span class="hello">Hello</span>
-    <span class="my">my</span>
-    <span class="love">love!</span>
+    <span class="black">Hello</span>
+    <span class="blue"> my </span>
+    <span class="pink">love!</span>
   </h1>
 
-  <div class="btn-group">
-    <button onclick="openPopup()">Yes please</button>
-    <button onclick="sadPopup()">No thanks</button>
+  <div class="buttons">
+    <button class="btn yes" onclick="openPopup()">Yes please</button>
+    <button class="btn no" onclick="alert('I promise you’ll like it ❤️')">No thanks</button>
   </div>
 </div>
 
-<!-- POPUP SAD -->
-<div class="popup" id="popupSad">
-  <div class="popup-box">
-    <h2>I promise you'll like it</h2>
-    <button onclick="closeAll()">Try again</button>
-  </div>
-</div>
-
-<!-- POPUP 1 -->
-<div class="popup" id="popup1">
-  <div class="popup-box">
+<!-- POPUP -->
+<div class="popup" id="popup">
+  <div class="card">
     <h2>THESE ARE FOR YOU!</h2>
     <p>I hope you like it, I love you.</p>
 
     <div class="grid">
-      <div class="card">🖼️</div>
-      <div class="card">💐</div>
-      <div class="card">🔒</div>
-      <div class="card">💌</div>
+      <div class="item">🖼️</div>
+      <div class="item">💐</div>
+      <div class="item">🔒</div>
+      <div class="item">💌</div>
     </div>
 
-    <button class="next-btn" onclick="nextPopup()">Next</button>
+    <button class="next">Next</button>
+
     <div class="footer">PoweredByAryanzUtama</div>
   </div>
 </div>
 
 <script>
-let step = 1;
-
-function openPopup(){
-  document.getElementById("popup1").classList.add("active");
-}
-
-function sadPopup(){
-  document.getElementById("popupSad").classList.add("active");
-}
-
-function closeAll(){
-  document.querySelectorAll(".popup").forEach(p=>p.classList.remove("active"));
-}
-
-function nextPopup(){
-  alert("STOP DI SINI DULU ✋\nPopup selanjutnya kita bahas satu-satu ya 😌");
+function openPopup() {
+  document.getElementById('popup').classList.add('active');
 }
 </script>
 
