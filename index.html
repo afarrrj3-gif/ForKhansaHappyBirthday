@@ -30,7 +30,7 @@ body{
   animation: paperFloat 6s ease-in-out infinite;
 }
 
-/* POPUP CARD */
+/* CARD */
 .card{
   background:rgba(255,255,255,0.9);
   padding:35px 25px 40px;
@@ -40,7 +40,7 @@ body{
   animation: popIn .7s ease;
 }
 
-.hidden{display:none;}
+.hidden{display:none}
 
 /* CAT */
 .cat{
@@ -60,9 +60,9 @@ h1{
   margin-bottom:10px;
 }
 
-.black{color:#111;}
-.blue{color:#3b82f6;}
-.pink{color:#ec4899;}
+.black{color:#111}
+.blue{color:#3b82f6}
+.pink{color:#ec4899}
 
 .subtitle{
   font-family:'Poppins', sans-serif;
@@ -95,28 +95,28 @@ button{
 }
 
 .secondary{
-  background:white;
   color:#ec4899;
 }
 
-/* OVERLAY GIFTS */
+/* OVERLAY */
 .overlay{
   position:fixed;
   inset:0;
   background:rgba(0,0,0,.45);
-  backdrop-filter:blur(4px);
+  backdrop-filter:blur(5px);
   display:flex;
   justify-content:center;
   align-items:center;
-  z-index:10;
+  z-index:20;
   animation: fadeIn .6s ease;
 }
 
+/* GIFT BOX */
 .gift-box{
-  background:rgba(255,255,255,.92);
-  border-radius:20px;
-  padding:25px;
-  width:320px;
+  background:rgba(255,255,255,.95);
+  border-radius:22px;
+  padding:28px 24px 30px;
+  width:330px;
   animation: popIn .7s ease;
 }
 
@@ -124,27 +124,27 @@ button{
   font-family:'Patrick Hand', cursive;
   font-size:26px;
   text-align:center;
-  margin-bottom:18px;
+  margin-bottom:20px;
   color:#111;
 }
 
 .gifts{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:15px;
+  gap:16px;
 }
 
 .gift{
   background:#fff;
-  border-radius:16px;
-  padding:18px 10px;
+  border-radius:18px;
+  padding:20px 10px;
   text-align:center;
   box-shadow:0 6px 15px rgba(0,0,0,.08);
   animation: floatGift 3s ease-in-out infinite;
 }
 
 .gift span{
-  font-size:32px;
+  font-size:34px;
   display:block;
   margin-bottom:8px;
 }
@@ -158,36 +158,36 @@ button{
 
 /* ANIMATIONS */
 @keyframes blink{
-  0%,95%,100%{transform:scaleY(1);}
-  96%{transform:scaleY(0.1);}
+  0%,95%,100%{transform:scaleY(1)}
+  96%{transform:scaleY(0.1)}
 }
 
 @keyframes breathe{
-  0%{transform:translateY(0);}
-  50%{transform:translateY(-6px);}
-  100%{transform:translateY(0);}
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-6px)}
+  100%{transform:translateY(0)}
 }
 
 @keyframes popIn{
-  from{opacity:0;transform:scale(.85);}
-  to{opacity:1;transform:scale(1);}
+  from{opacity:0;transform:scale(.85)}
+  to{opacity:1;transform:scale(1)}
 }
 
 @keyframes paperFloat{
-  0%{transform:translateY(0);}
-  50%{transform:translateY(-8px);}
-  100%{transform:translateY(0);}
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
+  100%{transform:translateY(0)}
 }
 
 @keyframes fadeIn{
-  from{opacity:0;}
-  to{opacity:1;}
+  from{opacity:0}
+  to{opacity:1}
 }
 
 @keyframes floatGift{
-  0%{transform:translateY(0);}
-  50%{transform:translateY(-6px);}
-  100%{transform:translateY(0);}
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-6px)}
+  100%{transform:translateY(0)}
 }
 </style>
 </head>
@@ -196,8 +196,9 @@ button{
 
 <div class="paper">
 
-  <!-- PAGE 1 -->
+  <!-- MAIN CARD -->
   <div class="card" id="page1">
+
     <svg class="cat" viewBox="0 0 200 200">
       <circle cx="100" cy="110" r="45" fill="#fff" stroke="#111" stroke-width="2"/>
       <path d="M60 80 L80 40 L100 80" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -218,18 +219,13 @@ button{
 
     <div class="buttons">
       <button class="primary" onclick="openGifts()">YES PLEASE</button>
-      <button class="secondary" onclick="goNo()">NO THANKS</button>
+      <button class="secondary">NO THANKS</button>
     </div>
-  </div>
-
-  <!-- PAGE 2 -->
-  <div class="card hidden" id="page2">
-    <h1 class="pink">I promise you'll like it</h1>
   </div>
 
 </div>
 
-<!-- GIFTS OVERLAY -->
+<!-- OVERLAY GIFTS (DISEMBUNYIKAN VIA JS) -->
 <div class="overlay hidden" id="giftOverlay">
   <div class="gift-box">
     <div class="gift-title">These are for you 💖</div>
@@ -243,30 +239,18 @@ button{
 </div>
 
 <script>
-function goNo(){
-  page1.classList.add("hidden");
-  page2.classList.remove("hidden");
-}
-
-function openGifts(){
-  document.getElementById("giftOverlay").classList.remove("hidden");
-}
-</script>
-<script>
 const overlay = document.getElementById("giftOverlay");
 
-window.onload = () => {
-  overlay.classList.add("hidden"); // PAKSA SEMBUNYI SAAT LOAD
-};
+// PASTI SEMBUNYI SAAT LOAD
+document.addEventListener("DOMContentLoaded", () => {
+  overlay.classList.add("hidden");
+});
 
-function goNo(){
-  page1.classList.add("hidden");
-  page2.classList.remove("hidden");
-}
-
+// MUNCUL HANYA SAAT YES PLEASE
 function openGifts(){
-  overlay.classList.remove("hidden"); // MUNCUL PAS YES PLEASE
+  overlay.classList.remove("hidden");
 }
 </script>
+
 </body>
 </html>
