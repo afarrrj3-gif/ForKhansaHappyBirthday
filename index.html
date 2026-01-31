@@ -2,101 +2,165 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>STOK ML AUTO EDIT</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Untuk Kamu</title>
+
 <style>
-body{
-  margin:0;
-  background:#0b1220;
-  color:#fff;
-  font-family: Arial, sans-serif;
-  text-align:center;
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(180deg, #0f172a, #020617);
+  color: #e5e7eb;
 }
-canvas{max-width:100%; border-radius:12px;}
-input,button{
-  width:90%;
-  padding:12px;
-  margin:6px 0;
-  font-size:16px;
+
+.container {
+  max-width: 420px;
+  margin: 80px auto;
+  padding: 24px;
+  text-align: center;
 }
-button{
-  background:#00ff9c;
-  border:none;
-  font-weight:bold;
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 15px;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+button {
+  width: 100%;
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-main {
+  background: linear-gradient(90deg, #ec4899, #f472b6);
+  color: #3b0a1e;
+}
+
+.btn-disabled {
+  background: #1e293b;
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.footer {
+  margin-top: 30px;
+  font-size: 12px;
+  opacity: 0.5;
+}
+
+/* POPUP */
+.popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-box {
+  background: #020617;
+  padding: 24px;
+  border-radius: 14px;
+  max-width: 360px;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+video {
+  width: 100%;
+  border-radius: 12px;
+  margin-top: 16px;
 }
 </style>
 </head>
+
 <body>
 
-<h2>STOK ML AUTO EDIT</h2>
+<!-- POPUP AWAL -->
+<div class="popup" id="popupIntro">
+  <div class="popup-box">
+    <h1>Kamu Itu Spesial 🤍</h1>
+    <p>
+      Aku ga pernah nyangka kita bisa sedeket ini.  
+      Semua terjadi sederhana, tapi rasanya berarti.
+      Website ini aku bikin khusus buat kamu.
+    </p>
+    <button class="btn-main" onclick="closeIntro()">Lanjut</button>
+  </div>
+</div>
 
-<input type="file" id="img1" accept="image/*">
-<input type="file" id="img2" accept="image/*">
+<div class="container">
+  <h1>Selamat Ulang Tahun 🎂</h1>
+  <p>
+    Hari ini bukan cuma tentang bertambahnya usia,  
+    tapi tentang kamu yang tetap jadi diri kamu —  
+    dan itu cukup buat aku bangga.
+  </p>
 
-<input id="harga" placeholder="Harga (contoh: 125.000)">
-<input id="emblem" placeholder="Emblem (MAX)">
-<input id="hero" placeholder="Hero (FULL)">
-<input id="mcore" placeholder="Mcore (57)">
-<input id="allskin" placeholder="All Skin (209)">
-<input id="rank" placeholder="Rank (GLRY 52)">
+  <button class="btn-main" onclick="showEffort()">
+    Effort aku buat kamu
+  </button>
 
-<button onclick="render()">EDIT</button>
-<button onclick="save()">SIMPAN KE GALERI</button>
+  <button class="btn-disabled">
+    🎥 Video belum bisa dibuka
+  </button>
 
-<canvas id="cv" width="1080" height="1350"></canvas>
+  <!-- VIDEO (TERKUNCI) -->
+  <div id="videoBox" class="hidden">
+    <video controls>
+      <source src="video.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <div class="footer">
+    PoweredByAryanzUtama
+  </div>
+</div>
+
+<!-- POPUP EFFORT -->
+<div class="popup hidden" id="popupEffort">
+  <div class="popup-box">
+    <p>
+      Video ini aku simpan sampai waktunya tepat.  
+      Aku pengen kamu nontonnya setelah aku kasih  
+      hadiah ini langsung ke kamu 🤍
+    </p>
+    <button class="btn-main" onclick="closeEffort()">Aku ngerti</button>
+  </div>
+</div>
 
 <script>
-const cv = document.getElementById("cv");
-const ctx = cv.getContext("2d");
-const template = new Image();
-template.src = "https://res.cloudinary.com/dtdodhqqi/image/upload/v1767374406/Proyek_Baru_277_4043A46_o4aeuu.png";
-
-function clipImage(img, x, y, w, h){
-  ctx.save();
-  ctx.beginPath();
-  ctx.roundRect(x,y,w,h,20);
-  ctx.clip();
-  ctx.drawImage(img,x,y,w,h);
-  ctx.restore();
+function closeIntro() {
+  document.getElementById('popupIntro').classList.add('hidden');
 }
 
-function render(){
-  ctx.clearRect(0,0,1080,1350);
-  ctx.drawImage(template,0,0,1080,1350);
-
-  const i1 = document.getElementById("img1").files[0];
-  const i2 = document.getElementById("img2").files[0];
-
-  if(i1){
-    const img = new Image();
-    img.onload=()=>clipImage(img,120,230,400,220);
-    img.src=URL.createObjectURL(i1);
-  }
-  if(i2){
-    const img = new Image();
-    img.onload=()=>clipImage(img,560,230,400,220);
-    img.src=URL.createObjectURL(i2);
-  }
-
-  ctx.textAlign="center";
-  ctx.fillStyle="#fff";
-  ctx.font="bold 60px Arial";
-  ctx.fillText("IDR "+harga.value,540,530);
-
-  ctx.font="bold 34px Arial";
-  ctx.fillText(emblem.value,260,980);
-  ctx.fillText(hero.value,260,1040);
-  ctx.fillText(mcore.value,820,980);
-  ctx.fillText(allskin.value,820,1040);
-
-  ctx.font="bold 40px Arial";
-  ctx.fillText(rank.value,540,1090);
+function showEffort() {
+  document.getElementById('popupEffort').classList.remove('hidden');
 }
 
-function save(){
-  const a=document.createElement("a");
-  a.download="hasil-edit.png";
-  a.href=cv.toDataURL("image/png");
-  a.click();
+function closeEffort() {
+  document.getElementById('popupEffort').classList.add('hidden');
+}
+
+// MODE BUKA VIDEO (KHUSUS LU)
+if (window.location.search.includes("open=true")) {
+  document.querySelector('.btn-disabled').style.display = 'none';
+  document.getElementById('videoBox').classList.remove('hidden');
 }
 </script>
 
