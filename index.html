@@ -5,12 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hello My Love</title>
 
+<!-- GOOGLE FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family: 'Comic Sans MS','Segoe UI',sans-serif;
 }
 
 body{
@@ -27,56 +29,25 @@ body{
   animation: paperFloat 6s ease-in-out infinite;
 }
 
-.page{
+/* POPUP CARD */
+.card{
+  background:rgba(255,255,255,0.9);
+  padding:35px 25px 40px;
+  border-radius:18px;
   text-align:center;
-  animation: fadeIn .8s ease;
+  width:300px;
+  animation: popIn .7s ease;
 }
 
 .hidden{
   display:none;
 }
 
-/* TEXT */
-h1{
-  font-size:38px;
-  margin-top:15px;
-}
-
-.black{color:#111;}
-.blue{color:#3b82f6;}
-.pink{color:#ec4899;}
-
-/* BUTTONS */
-.buttons{
-  margin-top:30px;
-}
-
-button{
-  padding:12px 22px;
-  margin:8px;
-  border-radius:25px;
-  border:2px solid #ec4899;
-  background:transparent;
-  font-weight:bold;
-  font-size:15px;
-}
-
-.yes{
-  background:#ec4899;
-  color:white;
-}
-
-.retry{
-  background:#3b82f6;
-  color:white;
-  border-color:#3b82f6;
-}
-
 /* CAT */
 .cat{
-  width:120px;
-  margin:auto;
-  animation: catFloat 3s ease-in-out infinite;
+  width:90px;
+  margin:0 auto 15px;
+  animation: breathe 3s ease-in-out infinite;
 }
 
 .eye{
@@ -84,36 +55,72 @@ button{
   transform-origin:center;
 }
 
-.sad{
-  animation: sadShake 2s infinite;
+/* TEXT */
+h1{
+  font-family:'Patrick Hand', cursive;
+  font-size:36px;
+  margin-bottom:10px;
 }
 
-/* ANIMATION */
-@keyframes catFloat{
-  0%{transform:translateY(0);}
-  50%{transform:translateY(-12px);}
-  100%{transform:translateY(0);}
+.black{color:#111;}
+.blue{color:#3b82f6;}
+.pink{color:#ec4899;}
+
+.subtitle{
+  font-family:'Poppins', sans-serif;
+  font-size:14px;
+  margin-bottom:25px;
+  color:#333;
 }
 
+/* BUTTONS */
+.buttons{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+}
+
+button{
+  padding:10px 18px;
+  border-radius:25px;
+  font-family:'Poppins', sans-serif;
+  font-size:13px;
+  font-weight:600;
+  border:2px solid #ec4899;
+  background:white;
+}
+
+.primary{
+  background:#ec4899;
+  color:white;
+}
+
+.secondary{
+  background:white;
+  color:#ec4899;
+}
+
+/* ANIMATIONS */
 @keyframes blink{
   0%,95%,100%{transform:scaleY(1);}
   96%{transform:scaleY(0.1);}
 }
 
-@keyframes sadShake{
-  0%,100%{transform:rotate(0);}
-  50%{transform:rotate(3deg);}
+@keyframes breathe{
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-6px);}
+  100%{transform:translateY(0);}
+}
+
+@keyframes popIn{
+  from{opacity:0;transform:scale(.9);}
+  to{opacity:1;transform:scale(1);}
 }
 
 @keyframes paperFloat{
   0%{transform:translateY(0);}
   50%{transform:translateY(-8px);}
   100%{transform:translateY(0);}
-}
-
-@keyframes fadeIn{
-  from{opacity:0;transform:scale(.95);}
-  to{opacity:1;}
 }
 </style>
 </head>
@@ -123,19 +130,19 @@ button{
 <div class="paper">
 
   <!-- PAGE 1 -->
-  <div class="page" id="page1">
+  <div class="card" id="page1">
 
-    <!-- CAT SVG -->
+    <!-- DOODLE CAT -->
     <svg class="cat" viewBox="0 0 200 200">
-      <circle cx="100" cy="110" r="55" fill="#fff"/>
-      <polygon points="60,60 80,20 100,60" fill="#fff"/>
-      <polygon points="140,60 120,20 100,60" fill="#fff"/>
+      <circle cx="100" cy="110" r="45" fill="#fff" stroke="#111" stroke-width="2"/>
+      <path d="M60 80 L80 40 L100 80" fill="#fff" stroke="#111" stroke-width="2"/>
+      <path d="M140 80 L120 40 L100 80" fill="#fff" stroke="#111" stroke-width="2"/>
 
-      <ellipse class="eye" cx="80" cy="105" rx="6" ry="10" fill="#111"/>
-      <ellipse class="eye" cx="120" cy="105" rx="6" ry="10" fill="#111"/>
+      <ellipse class="eye" cx="85" cy="110" rx="5" ry="8" fill="#111"/>
+      <ellipse class="eye" cx="115" cy="110" rx="5" ry="8" fill="#111"/>
 
-      <circle cx="100" cy="120" r="4" fill="#ec4899"/>
-      <path d="M90 130 Q100 135 110 130" stroke="#111" fill="none"/>
+      <circle cx="100" cy="122" r="3" fill="#ec4899"/>
+      <path d="M92 130 Q100 135 108 130" stroke="#111" fill="none"/>
     </svg>
 
     <h1>
@@ -144,41 +151,39 @@ button{
       <span class="pink"> love!</span>
     </h1>
 
+    <div class="subtitle">do you want to see your gift?</div>
+
     <div class="buttons">
-      <button class="yes">YES PLEASE</button>
-      <button onclick="goNo()">NO THANKS</button>
+      <button class="primary">YES PLEASE</button>
+      <button class="secondary" onclick="goNo()">NO THANKS</button>
     </div>
   </div>
 
   <!-- PAGE 2 -->
-  <div class="page hidden" id="page2">
+  <div class="card hidden" id="page2">
 
-    <svg class="cat sad" viewBox="0 0 200 200">
-      <circle cx="100" cy="110" r="55" fill="#fff"/>
-      <polygon points="60,60 80,20 100,60" fill="#fff"/>
-      <polygon points="140,60 120,20 100,60" fill="#fff"/>
-
-      <ellipse cx="80" cy="110" rx="6" ry="10" fill="#111"/>
-      <ellipse cx="120" cy="110" rx="6" ry="10" fill="#111"/>
-
-      <path d="M85 135 Q100 125 115 135" stroke="#111" fill="none"/>
+    <svg class="cat" viewBox="0 0 200 200">
+      <circle cx="100" cy="110" r="45" fill="#fff" stroke="#111" stroke-width="2"/>
+      <ellipse cx="85" cy="115" rx="5" ry="8" fill="#111"/>
+      <ellipse cx="115" cy="115" rx="5" ry="8" fill="#111"/>
+      <path d="M90 135 Q100 125 110 135" stroke="#111" fill="none"/>
     </svg>
 
-    <h1 class="pink">I promise you’ll like it</h1>
-    <button class="retry" onclick="goYes()">TRY AGAIN</button>
+    <h1 class="pink">I promise you'll like it</h1>
+    <button class="primary" onclick="goYes()">TRY AGAIN</button>
   </div>
 
 </div>
 
 <script>
 function goNo(){
-  document.getElementById("page1").classList.add("hidden");
-  document.getElementById("page2").classList.remove("hidden");
+  page1.classList.add("hidden");
+  page2.classList.remove("hidden");
 }
 
 function goYes(){
-  document.getElementById("page2").classList.add("hidden");
-  document.getElementById("page1").classList.remove("hidden");
+  page2.classList.add("hidden");
+  page1.classList.remove("hidden");
 }
 </script>
 
