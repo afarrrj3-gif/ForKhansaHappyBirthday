@@ -252,6 +252,21 @@ function openGifts(){
   document.getElementById("giftOverlay").classList.remove("hidden");
 }
 </script>
+<script>
+const overlay = document.getElementById("giftOverlay");
 
+window.onload = () => {
+  overlay.classList.add("hidden"); // PAKSA SEMBUNYI SAAT LOAD
+};
+
+function goNo(){
+  page1.classList.add("hidden");
+  page2.classList.remove("hidden");
+}
+
+function openGifts(){
+  overlay.classList.remove("hidden"); // MUNCUL PAS YES PLEASE
+}
+</script>
 </body>
 </html>
