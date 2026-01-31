@@ -2,188 +2,253 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hello My Love</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- GOOGLE FONT -->
-<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<!-- FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
 
 <style>
 *{
+  box-sizing:border-box;
   margin:0;
   padding:0;
-  box-sizing:border-box;
+  font-family:'Patrick Hand', cursive;
 }
 
 body{
-  height:100vh;
-  background:url("https://res.cloudinary.com/dtdodhqqi/image/upload/v1769863421/fbd283a1716bd691a35e42afe2cc779c_1_zescvo.jpg");
+  min-height:100vh;
+  background:url('https://res.cloudinary.com/dtdodhqqi/image/upload/v1769863421/fbd283a1716bd691a35e42afe2cc779c_1_zescvo.jpg');
   background-size:cover;
   background-position:center;
   display:flex;
   justify-content:center;
   align-items:center;
+  overflow:hidden;
 }
 
-.paper{
-  animation: paperFloat 6s ease-in-out infinite;
-}
-
-/* POPUP CARD */
-.card{
-  background:rgba(255,255,255,0.9);
-  padding:35px 25px 40px;
-  border-radius:18px;
+/* ===== MAIN ===== */
+.container{
   text-align:center;
-  width:300px;
-  animation: popIn .7s ease;
+  animation:fadeIn 1.2s ease;
 }
 
-.hidden{
-  display:none;
-}
-
-/* CAT */
+/* ===== CAT ===== */
 .cat{
-  width:90px;
-  margin:0 auto 15px;
-  animation: breathe 3s ease-in-out infinite;
+  width:120px;
+  height:120px;
+  margin:0 auto 20px;
+  position:relative;
+  animation:bounce 2s infinite;
+}
+
+.cat .head{
+  width:100%;
+  height:100%;
+  background:#fff;
+  border-radius:50%;
+  position:relative;
 }
 
 .eye{
-  animation: blink 4s infinite;
-  transform-origin:center;
+  width:12px;
+  height:12px;
+  background:#000;
+  border-radius:50%;
+  position:absolute;
+  top:45px;
+}
+.eye.left{ left:35px; }
+.eye.right{ right:35px; }
+
+.blush{
+  width:14px;
+  height:8px;
+  background:pink;
+  border-radius:50%;
+  position:absolute;
+  top:65px;
+}
+.blush.left{ left:22px; }
+.blush.right{ right:22px; }
+
+@keyframes bounce{
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(-10px); }
 }
 
-/* TEXT */
+/* ===== TITLE ===== */
 h1{
-  font-family:'Patrick Hand', cursive;
-  font-size:36px;
-  margin-bottom:10px;
+  font-size:48px;
+  margin-bottom:20px;
 }
+h1 span.hello{ color:#000; }
+h1 span.my{ color:#4aa3ff; }
+h1 span.love{ color:#ff6fae; }
 
-.black{color:#111;}
-.blue{color:#3b82f6;}
-.pink{color:#ec4899;}
-
-.subtitle{
-  font-family:'Poppins', sans-serif;
-  font-size:14px;
-  margin-bottom:25px;
-  color:#333;
-}
-
-/* BUTTONS */
-.buttons{
+/* ===== BUTTON ===== */
+.btn-group{
   display:flex;
-  gap:12px;
+  gap:15px;
   justify-content:center;
 }
 
 button{
-  padding:10px 18px;
+  padding:10px 22px;
   border-radius:25px;
-  font-family:'Poppins', sans-serif;
-  font-size:13px;
-  font-weight:600;
-  border:2px solid #ec4899;
-  background:white;
+  border:2px solid #ff6fae;
+  background:#fff;
+  font-size:18px;
+  cursor:pointer;
+  transition:.3s;
 }
 
-.primary{
-  background:#ec4899;
-  color:white;
+button:hover{
+  transform:scale(1.05);
 }
 
-.secondary{
-  background:white;
-  color:#ec4899;
+/* ===== POPUP ===== */
+.popup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.4);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  opacity:0;
+  pointer-events:none;
+  transition:.4s ease;
 }
 
-/* ANIMATIONS */
-@keyframes blink{
-  0%,95%,100%{transform:scaleY(1);}
-  96%{transform:scaleY(0.1);}
+.popup.active{
+  opacity:1;
+  pointer-events:auto;
 }
 
-@keyframes breathe{
-  0%{transform:translateY(0);}
-  50%{transform:translateY(-6px);}
-  100%{transform:translateY(0);}
+.popup-box{
+  background:#fff;
+  border-radius:25px;
+  padding:30px;
+  width:320px;
+  text-align:center;
+  animation:scaleIn .4s ease;
 }
 
-@keyframes popIn{
-  from{opacity:0;transform:scale(.9);}
-  to{opacity:1;transform:scale(1);}
+@keyframes scaleIn{
+  from{ transform:scale(.8); opacity:0; }
+  to{ transform:scale(1); opacity:1; }
 }
 
-@keyframes paperFloat{
-  0%{transform:translateY(0);}
-  50%{transform:translateY(-8px);}
-  100%{transform:translateY(0);}
+.popup-box h2{
+  color:#c0392b;
+  font-size:28px;
+  margin-bottom:10px;
+}
+
+.popup-box p{
+  font-size:16px;
+  margin-bottom:20px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.card{
+  border:2px solid #c0392b;
+  border-radius:15px;
+  padding:25px;
+  font-size:26px;
+}
+
+.next-btn{
+  border-color:#4aa3ff;
+}
+
+.footer{
+  font-size:12px;
+  margin-top:10px;
+  opacity:.6;
+}
+
+/* ===== ANIMATION ===== */
+@keyframes fadeIn{
+  from{ opacity:0; transform:translateY(20px); }
+  to{ opacity:1; transform:translateY(0); }
 }
 </style>
 </head>
 
 <body>
 
-<div class="paper">
-
-  <!-- PAGE 1 -->
-  <div class="card" id="page1">
-
-    <!-- DOODLE CAT -->
-    <svg class="cat" viewBox="0 0 200 200">
-      <circle cx="100" cy="110" r="45" fill="#fff" stroke="#111" stroke-width="2"/>
-      <path d="M60 80 L80 40 L100 80" fill="#fff" stroke="#111" stroke-width="2"/>
-      <path d="M140 80 L120 40 L100 80" fill="#fff" stroke="#111" stroke-width="2"/>
-
-      <ellipse class="eye" cx="85" cy="110" rx="5" ry="8" fill="#111"/>
-      <ellipse class="eye" cx="115" cy="110" rx="5" ry="8" fill="#111"/>
-
-      <circle cx="100" cy="122" r="3" fill="#ec4899"/>
-      <path d="M92 130 Q100 135 108 130" stroke="#111" fill="none"/>
-    </svg>
-
-    <h1>
-      <span class="black">Hello</span>
-      <span class="blue"> my</span>
-      <span class="pink"> love!</span>
-    </h1>
-
-    <div class="subtitle">do you want to see your gift?</div>
-
-    <div class="buttons">
-      <button class="primary">YES PLEASE</button>
-      <button class="secondary" onclick="goNo()">NO THANKS</button>
+<div class="container">
+  <div class="cat">
+    <div class="head">
+      <div class="eye left"></div>
+      <div class="eye right"></div>
+      <div class="blush left"></div>
+      <div class="blush right"></div>
     </div>
   </div>
 
-  <!-- PAGE 2 -->
-  <div class="card hidden" id="page2">
+  <h1>
+    <span class="hello">Hello</span>
+    <span class="my">my</span>
+    <span class="love">love!</span>
+  </h1>
 
-    <svg class="cat" viewBox="0 0 200 200">
-      <circle cx="100" cy="110" r="45" fill="#fff" stroke="#111" stroke-width="2"/>
-      <ellipse cx="85" cy="115" rx="5" ry="8" fill="#111"/>
-      <ellipse cx="115" cy="115" rx="5" ry="8" fill="#111"/>
-      <path d="M90 135 Q100 125 110 135" stroke="#111" fill="none"/>
-    </svg>
-
-    <h1 class="pink">I promise you'll like it</h1>
-    <button class="primary" onclick="goYes()">TRY AGAIN</button>
+  <div class="btn-group">
+    <button onclick="openPopup()">Yes please</button>
+    <button onclick="sadPopup()">No thanks</button>
   </div>
+</div>
 
+<!-- POPUP SAD -->
+<div class="popup" id="popupSad">
+  <div class="popup-box">
+    <h2>I promise you'll like it</h2>
+    <button onclick="closeAll()">Try again</button>
+  </div>
+</div>
+
+<!-- POPUP 1 -->
+<div class="popup" id="popup1">
+  <div class="popup-box">
+    <h2>THESE ARE FOR YOU!</h2>
+    <p>I hope you like it, I love you.</p>
+
+    <div class="grid">
+      <div class="card">🖼️</div>
+      <div class="card">💐</div>
+      <div class="card">🔒</div>
+      <div class="card">💌</div>
+    </div>
+
+    <button class="next-btn" onclick="nextPopup()">Next</button>
+    <div class="footer">PoweredByAryanzUtama</div>
+  </div>
 </div>
 
 <script>
-function goNo(){
-  page1.classList.add("hidden");
-  page2.classList.remove("hidden");
+let step = 1;
+
+function openPopup(){
+  document.getElementById("popup1").classList.add("active");
 }
 
-function goYes(){
-  page2.classList.add("hidden");
-  page1.classList.remove("hidden");
+function sadPopup(){
+  document.getElementById("popupSad").classList.add("active");
+}
+
+function closeAll(){
+  document.querySelectorAll(".popup").forEach(p=>p.classList.remove("active"));
+}
+
+function nextPopup(){
+  alert("STOP DI SINI DULU ✋\nPopup selanjutnya kita bahas satu-satu ya 😌");
 }
 </script>
 
