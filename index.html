@@ -1,226 +1,255 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hello My Love</title>
 
-<!-- FONT -->
-<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+<!-- GOOGLE FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-* {
-  box-sizing: border-box;
-  font-family: 'Patrick Hand', cursive;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
-body {
-  margin: 0;
-  height: 100vh;
-  background: url('https://res.cloudinary.com/dtdodhqqi/image/upload/v1769863421/fbd283a1716bd691a35e42afe2cc779c_1_zescvo.jpg') center/cover no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+body{
+  height:100vh;
+  background:url("https://res.cloudinary.com/dtdodhqqi/image/upload/v1769863421/fbd283a1716bd691a35e42afe2cc779c_1_zescvo.jpg");
+  background-size:cover;
+  background-position:center;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
 }
 
-/* CONTAINER */
-.container {
-  text-align: center;
+.paper{
+  animation: paperFloat 6s ease-in-out infinite;
 }
 
-/* CHARACTER */
-.character {
-  width: 120px;
-  height: 120px;
-  background: white;
-  border-radius: 50%;
-  margin: 0 auto 20px;
-  position: relative;
-  animation: float 3s ease-in-out infinite;
+/* POPUP CARD */
+.card{
+  background:rgba(255,255,255,0.9);
+  padding:35px 25px 40px;
+  border-radius:18px;
+  text-align:center;
+  width:300px;
+  animation: popIn .7s ease;
 }
 
-.eye {
-  width: 10px;
-  height: 10px;
-  background: black;
-  border-radius: 50%;
-  position: absolute;
-  top: 45px;
+.hidden{display:none;}
+
+/* CAT */
+.cat{
+  width:90px;
+  margin:0 auto 15px;
+  animation: breathe 3s ease-in-out infinite;
 }
 
-.eye.left { left: 40px; }
-.eye.right { right: 40px; }
-
-.blush {
-  width: 14px;
-  height: 8px;
-  background: pink;
-  border-radius: 50%;
-  position: absolute;
-  top: 65px;
+.eye{
+  animation: blink 4s infinite;
 }
 
-.blush.left { left: 30px; }
-.blush.right { right: 30px; }
-
-/* TITLE */
-h1 {
-  font-size: 42px;
-  margin-bottom: 30px;
+/* TEXT */
+h1{
+  font-family:'Patrick Hand', cursive;
+  font-size:36px;
+  margin-bottom:10px;
 }
 
-.black { color: black; }
-.blue { color: #4da3ff; }
-.pink { color: #ff7aa8; }
+.black{color:#111;}
+.blue{color:#3b82f6;}
+.pink{color:#ec4899;}
+
+.subtitle{
+  font-family:'Poppins', sans-serif;
+  font-size:14px;
+  margin-bottom:25px;
+  color:#333;
+}
 
 /* BUTTONS */
-.buttons {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
+.buttons{
+  display:flex;
+  gap:12px;
+  justify-content:center;
 }
 
-.btn {
-  padding: 10px 24px;
-  border-radius: 30px;
-  background: transparent;
-  font-size: 18px;
-  cursor: pointer;
-  transition: 0.3s;
+button{
+  padding:10px 18px;
+  border-radius:25px;
+  font-family:'Poppins', sans-serif;
+  font-size:13px;
+  font-weight:600;
+  border:2px solid #ec4899;
+  background:white;
+  cursor:pointer;
 }
 
-.btn.yes {
-  border: 2px solid #ff7aa8;
+.primary{
+  background:#ec4899;
+  color:white;
 }
 
-.btn.no {
-  border: 2px solid #ff7aa8;
+.secondary{
+  background:white;
+  color:#ec4899;
 }
 
-.btn:hover {
-  transform: scale(1.05);
+/* OVERLAY GIFTS */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  backdrop-filter:blur(4px);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:10;
+  animation: fadeIn .6s ease;
 }
 
-/* POPUP */
-.popup {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.2);
-  display: none;
-  align-items: center;
-  justify-content: center;
+.gift-box{
+  background:rgba(255,255,255,.92);
+  border-radius:20px;
+  padding:25px;
+  width:320px;
+  animation: popIn .7s ease;
 }
 
-.popup.active {
-  display: flex;
+.gift-title{
+  font-family:'Patrick Hand', cursive;
+  font-size:26px;
+  text-align:center;
+  margin-bottom:18px;
+  color:#111;
 }
 
-.card {
-  background: white;
-  border-radius: 30px;
-  padding: 30px;
-  width: 90%;
-  max-width: 360px;
-  text-align: center;
-  animation: fadeUp 0.6s ease;
+.gifts{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
 }
 
-.card h2 {
-  color: #c0392b;
-  font-size: 26px;
-  margin-bottom: 5px;
+.gift{
+  background:#fff;
+  border-radius:16px;
+  padding:18px 10px;
+  text-align:center;
+  box-shadow:0 6px 15px rgba(0,0,0,.08);
+  animation: floatGift 3s ease-in-out infinite;
 }
 
-.card p {
-  margin-bottom: 20px;
+.gift span{
+  font-size:32px;
+  display:block;
+  margin-bottom:8px;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-  margin-bottom: 20px;
+.gift p{
+  font-family:'Poppins', sans-serif;
+  font-size:13px;
+  font-weight:600;
+  color:#333;
 }
 
-.item {
-  border: 2px solid #c0392b;
-  border-radius: 20px;
-  padding: 20px;
-  font-size: 28px;
+/* ANIMATIONS */
+@keyframes blink{
+  0%,95%,100%{transform:scaleY(1);}
+  96%{transform:scaleY(0.1);}
 }
 
-.next {
-  border: 2px solid #4da3ff;
-  border-radius: 25px;
-  padding: 8px 30px;
-  background: transparent;
-  font-size: 18px;
+@keyframes breathe{
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-6px);}
+  100%{transform:translateY(0);}
 }
 
-.footer {
-  margin-top: 15px;
-  font-size: 14px;
-  opacity: 0.7;
+@keyframes popIn{
+  from{opacity:0;transform:scale(.85);}
+  to{opacity:1;transform:scale(1);}
 }
 
-/* ANIMATION */
-@keyframes float {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0); }
+@keyframes paperFloat{
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-8px);}
+  100%{transform:translateY(0);}
 }
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes fadeIn{
+  from{opacity:0;}
+  to{opacity:1;}
+}
+
+@keyframes floatGift{
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-6px);}
+  100%{transform:translateY(0);}
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-  <div class="character">
-    <div class="eye left"></div>
-    <div class="eye right"></div>
-    <div class="blush left"></div>
-    <div class="blush right"></div>
+<div class="paper">
+
+  <!-- PAGE 1 -->
+  <div class="card" id="page1">
+    <svg class="cat" viewBox="0 0 200 200">
+      <circle cx="100" cy="110" r="45" fill="#fff" stroke="#111" stroke-width="2"/>
+      <path d="M60 80 L80 40 L100 80" fill="#fff" stroke="#111" stroke-width="2"/>
+      <path d="M140 80 L120 40 L100 80" fill="#fff" stroke="#111" stroke-width="2"/>
+      <ellipse class="eye" cx="85" cy="110" rx="5" ry="8" fill="#111"/>
+      <ellipse class="eye" cx="115" cy="110" rx="5" ry="8" fill="#111"/>
+      <circle cx="100" cy="122" r="3" fill="#ec4899"/>
+      <path d="M92 130 Q100 135 108 130" stroke="#111" fill="none"/>
+    </svg>
+
+    <h1>
+      <span class="black">Hello</span>
+      <span class="blue"> my</span>
+      <span class="pink"> love!</span>
+    </h1>
+
+    <div class="subtitle">do you want to see your gift?</div>
+
+    <div class="buttons">
+      <button class="primary" onclick="openGifts()">YES PLEASE</button>
+      <button class="secondary" onclick="goNo()">NO THANKS</button>
+    </div>
   </div>
 
-  <h1>
-    <span class="black">Hello</span>
-    <span class="blue"> my </span>
-    <span class="pink">love!</span>
-  </h1>
-
-  <div class="buttons">
-    <button class="btn yes" onclick="openPopup()">Yes please</button>
-    <button class="btn no" onclick="alert('I promise you’ll like it ❤️')">No thanks</button>
+  <!-- PAGE 2 -->
+  <div class="card hidden" id="page2">
+    <h1 class="pink">I promise you'll like it</h1>
   </div>
+
 </div>
 
-<!-- POPUP -->
-<div class="popup" id="popup">
-  <div class="card">
-    <h2>THESE ARE FOR YOU!</h2>
-    <p>I hope you like it, I love you.</p>
-
-    <div class="grid">
-      <div class="item">🖼️</div>
-      <div class="item">💐</div>
-      <div class="item">🔒</div>
-      <div class="item">💌</div>
+<!-- GIFTS OVERLAY -->
+<div class="overlay hidden" id="giftOverlay">
+  <div class="gift-box">
+    <div class="gift-title">These are for you 💖</div>
+    <div class="gifts">
+      <div class="gift"><span>📸</span><p>Memories</p></div>
+      <div class="gift"><span>💌</span><p>Letters</p></div>
+      <div class="gift"><span>🎂</span><p>Surprise</p></div>
+      <div class="gift"><span>💖</span><p>My Love</p></div>
     </div>
-
-    <button class="next">Next</button>
-
-    <div class="footer">PoweredByNovallForKhansa</div>
   </div>
 </div>
 
 <script>
-function openPopup() {
-  document.getElementById('popup').classList.add('active');
+function goNo(){
+  page1.classList.add("hidden");
+  page2.classList.remove("hidden");
+}
+
+function openGifts(){
+  document.getElementById("giftOverlay").classList.remove("hidden");
 }
 </script>
 
