@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hello My Love</title>
 
-<!-- GOOGLE FONT -->
 <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
@@ -24,30 +23,27 @@ body{
   justify-content:center;
   align-items:center;
   overflow:hidden;
-  font-family:'Poppins', sans-serif;
 }
 
-/* FLOAT PAPER */
 .paper{
   position:relative;
   animation: paperFloat 6s ease-in-out infinite;
 }
 
-/* KHANSA BACKGROUND TEXT */
-.khansa-bg{
+/* BACKGROUND FLOAT TEXT */
+.bg-text{
   position:absolute;
   inset:0;
-  overflow:hidden;
   z-index:0;
   pointer-events:none;
 }
 
-.khansa-bg span{
+.bg-text span{
   position:absolute;
   font-family:'Patrick Hand', cursive;
-  font-size:28px;
-  color:rgba(236,72,153,.25);
-  animation: floatText 12s linear infinite;
+  font-size:20px;
+  color:rgba(236,72,153,0.25);
+  animation: drift 14s linear infinite;
 }
 
 /* CARD */
@@ -87,12 +83,13 @@ h1{
 .pink{color:#ec4899;}
 
 .subtitle{
+  font-family:'Poppins', sans-serif;
   font-size:14px;
   margin-bottom:25px;
   color:#333;
 }
 
-/* BUTTONS */
+/* BUTTON */
 .buttons{
   display:flex;
   gap:12px;
@@ -102,6 +99,7 @@ h1{
 button{
   padding:10px 18px;
   border-radius:25px;
+  font-family:'Poppins', sans-serif;
   font-size:13px;
   font-weight:600;
   border:2px solid #ec4899;
@@ -133,7 +131,7 @@ button{
   box-shadow:0 10px 25px rgba(0,0,0,.15);
 }
 
-/* ANIMATIONS */
+/* ANIMATION */
 @keyframes blink{
   0%,95%,100%{transform:scaleY(1);}
   96%{transform:scaleY(0.1);}
@@ -161,9 +159,15 @@ button{
   to{opacity:1;}
 }
 
-@keyframes floatText{
-  from{transform:translateY(120%);}
-  to{transform:translateY(-120%);}
+@keyframes drift{
+  from{
+    transform:translate(-40px,40px);
+    opacity:0;
+  }
+  to{
+    transform:translate(120px,-120px);
+    opacity:1;
+  }
 }
 </style>
 </head>
@@ -172,17 +176,17 @@ button{
 
 <div class="paper">
 
-  <!-- KHANSA BACKGROUND -->
-  <div class="khansa-bg">
-    <span style="top:10%;left:5%">Khansa</span>
-    <span style="top:30%;left:60%">Khansa</span>
-    <span style="top:55%;left:20%">Khansa</span>
-    <span style="top:75%;left:70%">Khansa</span>
-    <span style="top:90%;left:40%">Khansa</span>
+  <!-- BACKGROUND TEXT -->
+  <div class="bg-text">
+    <span style="top:20%;left:10%">Khansa</span>
+    <span style="top:40%;left:30%">Khansa</span>
+    <span style="top:60%;left:15%">Khansa</span>
+    <span style="top:75%;left:45%">Happy birthday sayang</span>
   </div>
 
   <!-- PAGE 1 -->
   <div class="card" id="page1">
+
     <svg class="cat" viewBox="0 0 200 200">
       <circle cx="100" cy="110" r="45" fill="#fff" stroke="#111" stroke-width="2"/>
       <path d="M60 80 L80 40 L100 80" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -209,6 +213,8 @@ button{
 
   <!-- PAGE 2 (NO THANKS) -->
   <div class="card hidden" id="page2">
+
+    <!-- KUCING TETAP ADA -->
     <svg class="cat" viewBox="0 0 200 200">
       <circle cx="100" cy="110" r="45" fill="#fff" stroke="#111" stroke-width="2"/>
       <ellipse cx="85" cy="115" rx="5" ry="8" fill="#111"/>
@@ -216,7 +222,7 @@ button{
       <path d="M90 135 Q100 125 110 135" stroke="#111" fill="none"/>
     </svg>
 
-    <h1 class="pink">Khansa… masa sih engga mau? 🥺</h1>
+    <h1 class="pink">I promise you'll like it</h1>
     <button class="primary" onclick="goYes()">TRY AGAIN</button>
   </div>
 
